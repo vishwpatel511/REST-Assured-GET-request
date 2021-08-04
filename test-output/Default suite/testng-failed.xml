@@ -5,7 +5,7 @@
     <classes>
       <class name="com.qa.APITestFunction.getCallTest">
         <methods>
-          <include name="test002"/>
+          <include name="deleteCall"/>
         </methods>
       </class> <!-- com.qa.APITestFunction.getCallTest -->
     </classes>

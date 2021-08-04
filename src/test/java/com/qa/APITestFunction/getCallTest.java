@@ -5,55 +5,56 @@ import org.testng.annotations.Test;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.*;
 import org.json.simple.JSONObject;
 
 
 public class getCallTest {
 	
   @Test
-  public void f() {
+  public void GetCall() {
 	  
 //	 Response res = RestAssured.get("https://reqres.in/api/users?page=2");
 	 
-	 RestAssured.given().get("https://reqres.in/api/users?page=2").then().log().all();
-		/*
-		 * System.out.println(res.asPrettyString()); System.out.println(res.headers());
-		 * System.out.println(res.getStatusCode());
-		 * System.out.println(res.getStatusLine());
-		 * System.out.println(res.getCookies()); Assert.assertEquals(200,
-		 * res.getStatusCode());
-		 */  }
+	// RestAssured.given().get("https://reqres.in/api/users?page=2").then().log().all();
+	
+	 
+	  //Gets the URL
+	 RestAssured.given().
+	 			get("https://reqres.in/api/users?page=2").then().statusCode(200).body("data.last_name[5]",equalTo("Howell"));
+  }
   
   @Test
-  public void test002() {
+  public void postCall() {
 	  
 //	  Response res = RestAssured.get("https://reqres.in/api/users?page=2");
 	 
+	  JSONObject jsonobject = new JSONObject();
+	  jsonobject.put("name", "Vishw");
+	  jsonobject.put("job", "Manager");
 	  
+	  System.out.println(jsonobject.toJSONString());
+	  RestAssured.given().body(jsonobject.toJSONString()).post("https://reqres.in/api/users").then().statusCode(201);
 	  
+  }
+  
+  @Test
+  public void putCall() {
 	  
+	JSONObject jsonobject= new JSONObject();
+	jsonobject.put("name", "Vishw");
+	jsonobject.put("job", "Assistant manager");
 	
+	RestAssured.given().body(jsonobject.toJSONString()).put("https://reqres.in/api/users").then().statusCode(200);
 	  
-		/*
-		 * System.out.println(res.getStatusCode());
-		 * 
-		 * JSONObject object = new JSONObject(); object.put("name", "Vishw");
-		 * object.put("job", "Pilot");
-		 * 
-		 * System.out.println(object);
-		 * 
-		 * RestAssured.given().body(object.toJSONString()).then().statusCode(404);
-		 * 
-		 * System.out.println(res.getStatusLine());
-		 * System.out.println(res.getCookies());
-		 * System.out.println(res.jsonPath().get("data.last_name[5]"));
-		 * System.out.println(res.getHeaders());
-		 * System.out.println(res.getBody().asPrettyString());
-		 * Assert.assertEquals("Howell", res.jsonPath().get("data.last_name[5]")); //
-		 * System.out.println(res.body().asPrettyString()..contains("Micheal"));
-		 */	
-		 
-		 
+	  
+  }
+  
+  @Test
+  public void deleteCall() {
+	  
+	  RestAssured.given().delete("https://reqres.in/api/users/2").then().statusCode(204);
+	  
+	  
   }
 }
